@@ -5,6 +5,7 @@
  var bodyParser = require("body-parser")
  const morgan = require("morgan")
  const dotenv = require("dotenv")
+ const locationRoute = require("./routes/location")
 
 dotenv.config()
 
@@ -16,6 +17,9 @@ dotenv.config()
  app.use(bodyParser.json({limit:"50mb"}))
  app.use(cors())
  app.use(morgan("common"))
+
+//Routes
+app.use("/api/location", locationRoute)
 
  app.listen(8080, () => {
     console.log("Server is running...")
