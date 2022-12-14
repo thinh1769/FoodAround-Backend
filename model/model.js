@@ -54,15 +54,15 @@ const locationSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    cityId: {
+    city: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "City"
     },
-    districtId: {
+    district: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "District"
     },
-    wardId: {
+    ward: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Ward"
     },

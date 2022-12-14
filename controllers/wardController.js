@@ -8,14 +8,26 @@ const wardController = {
             const savedWard = await newWard.save()
             if (req.body.district) {
                 const district = District.findById(req.body.district)
-                await district.updateOne({ districtId: savedWard._id}) 
+                await district.updateOne({ 
+                    district: savedWard._id
+                }) 
             }
-            res.status(200).json({ "statusCode": 200, "message": "Add District Successfully", payload: {
-                "id": savedWard._id, "name": savedWard.name, "cityId": savedWard.districtId
-            } })
+            res.status(200).json({ 
+                statusCode: 200, 
+                message: "Add Ward Successfully",
+                 payload: {
+                    id: savedWard._id, 
+                    name: savedWard.name, 
+                    city: savedWard.district
+                } 
+        })
         } catch(error) {
             console.log(error)
-            res.status(500).json({ "statusCode": 500, "message": "Internal Server Error", payload: null })
+            res.status(500).json({ 
+                statusCode: 500, 
+                message: "Internal Server Error", 
+                payload: null 
+            })
         }
     },
 
@@ -29,13 +41,21 @@ const wardController = {
                 const d = {
                     id: item._id,
                     name: item.name,
-                    districtId: item.districtId
+                    district: item.district
                 };
                 listWard.push(d);
             })
-            res.status(200).json({ "statusCode": 200, "message": "Get All Ward Successfully", payload: listWard })
+            res.status(200).json({ 
+                statusCode: 200, 
+                message: "Get All Ward Successfully", 
+                payload: listWard 
+            })
         } catch(error) {
-            res.status(500).json({ "statusCode": 500, "message": "Internal Server Error", payload: null })
+            res.status(500).json({ 
+                statusCode: 500, 
+                message: "Internal Server Error", 
+                payload: null 
+            })
         }
     },
 }
