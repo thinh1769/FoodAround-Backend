@@ -22,9 +22,9 @@ const citySchema = new mongoose.Schema({
 const districtSchema = new mongoose.Schema({
     name: {
         type: String,
-        require: true
+        required: true
     },
-    city: {
+    cityId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "City"
     }
@@ -35,7 +35,7 @@ const wardSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    district: {
+    districtId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "District"
     },
@@ -54,15 +54,15 @@ const locationSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    city: {
+    cityId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "City"
     },
-    district: {
+    districtId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "District"
     },
-    ward: {
+    wardId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Ward"
     },

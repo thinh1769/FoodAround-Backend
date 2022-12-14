@@ -6,6 +6,9 @@
  const morgan = require("morgan")
  const dotenv = require("dotenv")
  const locationRoute = require("./routes/location")
+ const cityRoute = require("./routes/city")
+ const districtRoute = require("./routes/district")
+ const wardRoute = require("./routes/ward")
 
 dotenv.config()
 
@@ -20,6 +23,10 @@ dotenv.config()
 
 //Routes
 app.use("/api/location", locationRoute)
+app.use("/api/city", cityRoute)
+app.use("/api/district", districtRoute)
+app.use("/api/ward", wardRoute)
+
 
  app.listen(8080, () => {
     console.log("Server is running...")
