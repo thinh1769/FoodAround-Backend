@@ -1,16 +1,23 @@
 const mongoose = require("mongoose")
 
-// const userSchema = new mongoose.Schema({
-//     name: {
-//         type: String,
-//         required: true
-//     },
-//     phoneNumber: {
-//         type: String,
-//         required: true
-//     },
-//     password: {}
-// })
+const userSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        minlength: 6,
+        maxlength: 40
+    },
+    phoneNumber: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    password: {
+        type: String,
+        required: true,
+        minlength: 6
+    }
+})
 
 const citySchema = new mongoose.Schema({
     name: {
@@ -72,9 +79,10 @@ const locationSchema = new mongoose.Schema({
     },
 })
 
+let User = mongoose.model("User", userSchema)
 let Location = mongoose.model("Location", locationSchema)
 let City = mongoose.model("City", citySchema)
 let District = mongoose.model("District", districtSchema)
 let Ward = mongoose.model("Ward", wardSchema)
 
-module.exports = { Location, City, District, Ward }
+module.exports = { User, Location, City, District, Ward }
