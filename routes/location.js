@@ -1,20 +1,21 @@
 const locationController = require("../controllers/locationController")
+const middlewareController = require("../controllers/middlewareController")
 
 const router = require("express").Router()
 
 /// Add location
-router.post("/", locationController.addLocation)
+router.post("/", middlewareController.verifyToken, locationController.addLocation)
 
 // Get all location
-router.get("/", locationController.getAllLocation)
+router.get("/", middlewareController.verifyToken, locationController.getAllLocation)
 
 // Get a location
-router.get("/:id", locationController.getALocation)
+router.get("/:id", middlewareController.verifyToken, locationController.getALocation)
 
 // Update location
-router.put("/:id", locationController.updateLocation)
+router.put("/:id", middlewareController.verifyToken, locationController.updateLocation)
 
 // Delete location
-router.delete("/:id", locationController.deleteLocation)
+router.delete("/:id", middlewareController.verifyToken, locationController.deleteLocation)
 
 module.exports = router

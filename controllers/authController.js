@@ -1,5 +1,6 @@
 const { User } = require("../model/model")
 const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 
 const authController = {
     //Register
@@ -59,13 +60,21 @@ const authController = {
                 })
             }
             if (user && isValidPassword) {
+                const token = jwt.sign({
+                    id: user.id
+                },
+                process.env.JWT_ACCESS_KEY,
+                {
+                    expiresIn: "30d"
+                })
                 res.status(200).json({ 
                     statusCode: 200, 
                     message: "Login successfully", 
                     payload: {
                         id: user.id, 
                         name: user.name, 
-                        phoneNumber: user.phoneNumber 
+                        phoneNumber: user.phoneNumber,
+                        token: token
                     }
                 })
             }
