@@ -17,7 +17,9 @@ const locationController = {
                     city: savedLocation.city, 
                     district: savedLocation.district, 
                     ward: savedLocation.ward, 
-                    note: savedLocation.note 
+                    note: savedLocation.note,
+                    long: savedLocation.long,
+                    lat: savedLocation.lat 
                 }
             })
         } catch(error) {
@@ -48,7 +50,9 @@ const locationController = {
                     district: item.district,
                     ward: item.ward,
                     address: item.address,
-                    note: item.note
+                    note: item.note,
+                    long: item.long,
+                    lat: item.lat 
                 };
                 listLocations.push(d);
             })

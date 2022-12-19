@@ -47,7 +47,6 @@ const authController = {
                     payload: null 
                 })
             }
-
             const isValidPassword = await bcrypt.compare(
                 req.body.password,
                 user.password
