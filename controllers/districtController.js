@@ -58,6 +58,36 @@ const districtController = {
             })
         }
     },
+
+    //Get districts by cityId
+    getDistrictsByCityId: async(req, res) => {
+        try {
+            const districts = await District.find()
+            const listDistrict = []
+
+            districts.forEach((item) => {
+                const d = {
+                    id: item._id,
+                    name: item.name
+                }
+                if (item.cityId == req.params.id) {
+                    listDistrict.push(d)
+                }
+                
+            })
+            res.status(200).json({
+                statusCode: 200,
+                message: "Get Districts By CityId Successfully",
+                payload: listDistrict
+            })
+        } catch(error) {
+            res.status(500).json({ 
+                statusCode: 500, 
+                message: "Internal Server Error", 
+                payload: null 
+            })
+        }
+    }
 }
 
 module.exports = districtController

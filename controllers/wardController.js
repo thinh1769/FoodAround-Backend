@@ -58,6 +58,36 @@ const wardController = {
             })
         }
     },
+
+    //Get wards by districtId
+    getWardsByCityId: async(req, res) => {
+        try {
+            const wards = await Ward.find()
+            const listWard = []
+
+            wards.forEach((item) => {
+                const w = {
+                    id: item._id,
+                    name: item.name
+                }
+                if (item.districtId == req.params.id) {
+                    listWard.push(w)
+                }
+                
+            })
+            res.status(200).json({
+                statusCode: 200,
+                message: "Get Wards By DistrictId Successfully",
+                payload: listWard
+            })
+        } catch(error) {
+            res.status(500).json({ 
+                statusCode: 500, 
+                message: "Internal Server Error", 
+                payload: null 
+            })
+        }
+    }
 }
 
 module.exports = wardController
