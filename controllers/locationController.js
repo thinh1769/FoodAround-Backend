@@ -6,6 +6,9 @@ const locationController = {
         try {
             const newLocation = new Location(req.body)
             const savedLocation = await newLocation.save()
+            const city = await City.findById(savedLocation.cityId)
+            const district = await District.findById(savedLocation.districtId)
+            const ward = await Ward.findById(savedLocation.wardId)
             res.status(200).json({ 
                 statusCode: 200,
                 message: "Add Location Successfully", 
@@ -14,9 +17,18 @@ const locationController = {
                     name: savedLocation.name, 
                     type: savedLocation.type, 
                     address: savedLocation.address, 
-                    city: savedLocation.city, 
-                    district: savedLocation.district, 
-                    ward: savedLocation.ward, 
+                    city: {
+                        id: city.id,
+                        name: city.name
+                    },
+                    district: {
+                        id: district.id,
+                        name: district.name
+                    },
+                    ward: {
+                        id: ward.id,
+                        name: ward.name
+                    }, 
                     note: savedLocation.note,
                     long: savedLocation.long,
                     lat: savedLocation.lat 
@@ -36,19 +48,31 @@ const locationController = {
     getAllLocation: async(req, res) => {
         try {
             const locations = await Location.find()
+            const city = await City.findById(locations.cityId)
+            const district = await District.findById(locations.districtId)
+            const ward = await Ward.findById(locations.wardId)
             const listLocations = []
 
             locations.forEach((item) => {
-                const city = City.findById(item.city)
-                const district = District.findById(item.district)
-                const ward = Ward.findById(item.ward)
+                const city = City.findById(item.cityId)
+                const district = District.findById(item.districtId)
+                const ward = Ward.findById(item.wardId)
                 const d = {
                     id: item.id,
                     name: item.name,
                     type: item.type,
-                    city: item.city,
-                    district: item.district,
-                    ward: item.ward,
+                    city: {
+                        id: city.id,
+                        name: city.name
+                    },
+                    district: {
+                        id: district.id,
+                        name: district.name
+                    },
+                    ward: {
+                        id: ward.id,
+                        name: ward.name
+                    }, 
                     address: item.address,
                     note: item.note,
                     long: item.long,
@@ -74,9 +98,9 @@ const locationController = {
     getALocation: async(req, res) => {
         try {
             const location = await Location.findById(req.params.id)
-            const city = await City.findById(location.city)
-            const district = await District.findById(location.district)
-            const ward = await Ward.findById(location.ward)
+            const city = await City.findById(location.cityId)
+            const district = await District.findById(location.districtId)
+            const ward = await Ward.findById(location.wardId)
             res.status(200).json({ 
                 statusCode: 200, 
                 message: "Get Location Successfully", 

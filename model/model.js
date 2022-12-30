@@ -61,17 +61,17 @@ const locationSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    city: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "City"
+    cityId: {
+        type: String,
+        required: true
     },
-    district: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "District"
+    districtId: {
+        type: String,
+        required: true
     },
-    ward: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Ward"
+    wardId: {
+        type: String,
+        required: true
     },
     note: {
         type: String,
