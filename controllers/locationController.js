@@ -48,19 +48,16 @@ const locationController = {
     getAllLocation: async(req, res) => {
         try {
             const locations = await Location.find()
-            const city = await City.findById(locations.cityId)
-            const district = await District.findById(locations.districtId)
-            const ward = await Ward.findById(locations.wardId)
             const listLocations = []
 
-            locations.forEach((item) => {
-                const city = City.findById(item.cityId)
-                const district = District.findById(item.districtId)
-                const ward = Ward.findById(item.wardId)
+            for (const item in locations) {
+                const city = await City.findById(locations[item].cityId)
+                const district = await District.findById(locations[item].districtId)
+                const ward = await Ward.findById(locations[item].wardId)
                 const d = {
-                    id: item.id,
-                    name: item.name,
-                    type: item.type,
+                    id: locations[item].id,
+                    name: locations[item].name,
+                    type: locations[item].type,
                     city: {
                         id: city.id,
                         name: city.name
@@ -73,13 +70,14 @@ const locationController = {
                         id: ward.id,
                         name: ward.name
                     }, 
-                    address: item.address,
-                    note: item.note,
-                    long: item.long,
-                    lat: item.lat 
+                    address: locations[item].address,
+                    note: locations[item].note,
+                    long: locations[item].long,
+                    lat: locations[item].lat 
                 };
                 listLocations.push(d);
-            })
+            }
+
             res.status(200).json({ 
                 statusCode: 200, 
                 message: "Get All Location Successfully", 
