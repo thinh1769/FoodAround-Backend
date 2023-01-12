@@ -119,7 +119,9 @@ const locationController = {
                         name: ward.name
                     }, 
                     address: location.address,
-                    note: location.note
+                    note: location.note,
+                    long: location.long,
+                    lat: location.lat
             }
         })
         } catch (error) {
