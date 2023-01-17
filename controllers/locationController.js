@@ -137,13 +137,36 @@ const locationController = {
     updateLocation: async(req, res) => {
         try {
             const location = await Location.findById(req.params.id)
+            const city = await City.findById(location.cityId)
+            const district = await District.findById(location.districtId)
+            const ward = await Ward.findById(location.wardId)
             await location.updateOne({
                 $set: req.body
             })
             res.status(200).json({
                 statusCode: 200, 
                 message: "Update Location Successfully", 
-                payload: null
+                payload: {
+                    id: location.id, 
+                    name: location.name, 
+                    type: location.type, 
+                    city: {
+                        id: city.id,
+                        name: city.name
+                    },
+                    district: {
+                        id: district.id,
+                        name: district.name
+                    },
+                    ward: {
+                        id: ward.id,
+                        name: ward.name
+                    }, 
+                    address: location.address,
+                    note: location.note,
+                    long: location.long,
+                    lat: location.lat
+            }
             })
         } catch(error) {res.status(500).json({ 
             statusCode: 500, 
