@@ -92,6 +92,62 @@ const locationController = {
         }
     },
 
+    //Find location by name
+    findLocation: async(req, res) => {
+        try {
+            const listLocations = []
+            // const locations = await Location.find({ $text: { $search: req.params.searchString } });
+            const locations = await Location.find({ name: (req.params.searchString) })
+
+            if (locations.length == 0) {
+                return res.status(404).json({ 
+                    statusCode: 404, 
+                    message: "Not Found Location", 
+                    payload: null 
+                })
+            }
+            for (const item in locations) {
+                const city = await City.findById(locations[item].cityId)
+                const district = await District.findById(locations[item].districtId)
+                const ward = await Ward.findById(locations[item].wardId)
+                const d = {
+                    id: locations[item].id,
+                    name: locations[item].name,
+                    type: locations[item].type,
+                    city: {
+                        id: city.id,
+                        name: city.name
+                    },
+                    district: {
+                        id: district.id,
+                        name: district.name
+                    },
+                    ward: {
+                        id: ward.id,
+                        name: ward.name
+                    }, 
+                    address: locations[item].address,
+                    note: locations[item].note,
+                    long: locations[item].long,
+                    lat: locations[item].lat 
+                };
+                listLocations.push(d)
+
+                res.status(200).json({ 
+                    statusCode: 200, 
+                    message: "Find Location Successfully", 
+                    payload: listLocations
+                })
+            }
+        } catch (error) {
+            res.status(500).json({ 
+                statusCode: 500, 
+                message: "Internal Server Error", 
+                payload: null 
+            })
+        }
+    },
+
     //Get a location
     getALocation: async(req, res) => {
         try {
