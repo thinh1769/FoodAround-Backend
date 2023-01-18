@@ -96,9 +96,9 @@ const locationController = {
     findLocation: async(req, res) => {
         try {
             const listLocations = []
-            // const locations = await Location.find({ $text: { $search: req.params.searchString } });
-            const locations = await Location.find({ name: (req.params.searchString) })
-
+            const search = req.params.searchString
+            const regex = new RegExp(`${search}`, 'i')
+            const locations = await Location.find({ name: {$regex: regex} })
             if (locations.length == 0) {
                 return res.status(404).json({ 
                     statusCode: 404, 
@@ -132,13 +132,12 @@ const locationController = {
                     lat: locations[item].lat 
                 };
                 listLocations.push(d)
-
-                res.status(200).json({ 
-                    statusCode: 200, 
-                    message: "Find Location Successfully", 
-                    payload: listLocations
-                })
             }
+            res.status(200).json({ 
+                statusCode: 200, 
+                message: "Find Location Successfully", 
+                payload: listLocations
+            })
         } catch (error) {
             res.status(500).json({ 
                 statusCode: 500, 
