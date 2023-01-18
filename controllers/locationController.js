@@ -92,14 +92,21 @@ const locationController = {
         }
     },
 
-    //Find location by name
+    //Find location by name and type
     findLocation: async(req, res) => {
         try {
             const listLocations = []
             const search = req.params.searchString
             const regex = new RegExp(`${search}`, 'i')
-            const locations = await Location.find({ name: {$regex: regex} })
-            if (locations.length == 0) {
+
+            const locations = await Location.find({ 
+                $or: [ 
+                    { name: {$regex: regex} },
+                    { type: {$regex: regex} }
+                ]
+             })
+
+            if (locations.length == 0 ) {
                 return res.status(404).json({ 
                     statusCode: 404, 
                     message: "Not Found Location", 
@@ -133,6 +140,7 @@ const locationController = {
                 };
                 listLocations.push(d)
             }
+
             res.status(200).json({ 
                 statusCode: 200, 
                 message: "Find Location Successfully", 
