@@ -13,7 +13,7 @@ router.get("/all-location", middlewareController.verifyToken, locationController
 router.get("/:id", middlewareController.verifyToken, locationController.getALocation)
 
 // Find location
-router.get("/find-by-name/:searchString", middlewareController.verifyToken, locationController.findLocation)
+router.post("/find-location", middlewareController.verifyToken, locationController.findLocation)
 
 // Update location
 router.put("/update-location/:id", middlewareController.verifyToken, locationController.updateLocation)

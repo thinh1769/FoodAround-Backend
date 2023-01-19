@@ -96,7 +96,8 @@ const locationController = {
     findLocation: async(req, res) => {
         try {
             const listLocations = []
-            const search = req.params.searchString
+            const search = req.body.searchString + ''
+            console.log(req.body)
             const regex = new RegExp(`${search}`, 'i')
 
             const locations = await Location.find({ 
@@ -105,14 +106,7 @@ const locationController = {
                     { type: {$regex: regex} }
                 ]
              })
-
-            if (locations.length == 0 ) {
-                return res.status(404).json({ 
-                    statusCode: 404, 
-                    message: "Not Found Location", 
-                    payload: null 
-                })
-            }
+             
             for (const item in locations) {
                 const city = await City.findById(locations[item].cityId)
                 const district = await District.findById(locations[item].districtId)
