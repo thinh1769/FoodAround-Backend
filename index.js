@@ -12,6 +12,7 @@
  const authRoute = require("./routes/auth")
 
  const app = express()
+ const port = process.env.port || 8080
 
 dotenv.config()
 
